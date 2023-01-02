@@ -1,4 +1,4 @@
-package callgraph
+package callgraph.window
 
 enum class ComboBoxOptions(val text: String) {
     VIEW_ALWAYS("Always show"),

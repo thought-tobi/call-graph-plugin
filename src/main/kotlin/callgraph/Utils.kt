@@ -3,6 +3,7 @@ package callgraph
 import callgraph.canvas.CanvasConfig
 import callgraph.model.Dependency
 import callgraph.model.Graph
+import callgraph.window.CallGraphToolWindowProjectService
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.application.ApplicationManager
@@ -32,7 +33,23 @@ import guru.nidi.graphviz.model.Factory.mutNode
 import java.awt.geom.Point2D
 
 object Utils {
-    private const val normalizedGridSize = 0.1f
+    private const val NORMALIZED_GRID_SIZE = 0.1f
+
+    fun runCallGraphFromAction(anActionEvent: AnActionEvent, buildType: CanvasConfig.BuildType) {
+        val project = anActionEvent.project
+        val psiElement = anActionEvent.getData(CommonDataKeys.PSI_ELEMENT) // get the element under editor caret
+        if (project != null && psiElement is PsiMethod) {
+            ToolWindowManager.getInstance(project)
+                    .getToolWindow("Call Graph")
+                    ?.activate {
+                        ServiceManager.getService(project, CallGraphToolWindowProjectService::class.java)
+                                .callGraphToolWindow
+                                .clearFocusedMethods()
+                                .toggleFocusedMethod(psiElement)
+                                .run(buildType)
+                    }
+        }
+    }
 
     fun getActiveProject(): Project? {
         return ProjectManager.getInstance()
@@ -177,22 +194,6 @@ object Utils {
         }
     }
 
-    fun runCallGraphFromAction(anActionEvent: AnActionEvent, buildType: CanvasConfig.BuildType) {
-        val project = anActionEvent.project
-        val psiElement = anActionEvent.getData(CommonDataKeys.PSI_ELEMENT) // get the element under editor caret
-        if (project != null && psiElement is PsiMethod) {
-            ToolWindowManager.getInstance(project)
-                    .getToolWindow("Call Graph")
-                    ?.activate {
-                        ServiceManager.getService(project, CallGraphToolWindowProjectService::class.java)
-                                .callGraphToolWindow
-                                .clearFocusedMethods()
-                                .toggleFocusedMethod(psiElement)
-                                .run(buildType)
-                    }
-        }
-    }
-
     fun setActionEnabledAndVisibleByContext(anActionEvent: AnActionEvent) {
         val project = anActionEvent.project
         val psiElement = anActionEvent.getData(CommonDataKeys.PSI_ELEMENT)
@@ -313,7 +314,7 @@ object Utils {
             return blueprint
         }
         val gridSize = getGridSize(blueprint)
-        val desiredGridSize = Point2D.Float(normalizedGridSize, normalizedGridSize)
+        val desiredGridSize = Point2D.Float(NORMALIZED_GRID_SIZE, NORMALIZED_GRID_SIZE)
         val xFactor = if (gridSize.x == 0f) 1f else desiredGridSize.x / gridSize.x
         val yFactor = if (gridSize.y == 0f) 1f else desiredGridSize.y / gridSize.y
         return blueprint.mapValues { (_, point) -> Point2D.Float(point.x * xFactor, point.y * yFactor) }
@@ -345,8 +346,8 @@ object Utils {
                     val yPoints = blueprint.values.map { it.y }
                     val max = Point2D.Float(xPoints.maxOrNull() ?: 0f, yPoints.maxOrNull() ?: 0f)
                     val min = Point2D.Float(xPoints.minOrNull() ?: 0f, yPoints.minOrNull() ?: 0f)
-                    val width = max.x - min.x + normalizedGridSize
-                    val height = max.y - min.y + normalizedGridSize
+                    val width = max.x - min.x + NORMALIZED_GRID_SIZE
+                    val height = max.y - min.y + NORMALIZED_GRID_SIZE
                     Triple(blueprint, height, width)
                 }
         val sortedHeights = blueprintSizes.map { (_, height, _) -> height }.sortedBy { -it }

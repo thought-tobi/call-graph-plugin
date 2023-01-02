@@ -1,4 +1,4 @@
-package callgraph
+package callgraph.canvas
 
 import callgraph.canvas.Canvas
 import java.awt.event.*
