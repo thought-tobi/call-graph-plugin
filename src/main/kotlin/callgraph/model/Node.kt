@@ -1,5 +1,6 @@
-package callgraph
+package callgraph.model
 
+import callgraph.Utils
 import com.intellij.psi.PsiMethod
 import java.awt.geom.Point2D
 

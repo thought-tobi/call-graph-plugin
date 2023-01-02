@@ -1,5 +1,8 @@
 package callgraph
 
+import callgraph.canvas.Canvas
+import callgraph.canvas.CanvasBuilder
+import callgraph.canvas.CanvasConfig
 import com.intellij.ide.util.EditorHelper
 import com.intellij.psi.PsiMethod
 import java.awt.Dimension

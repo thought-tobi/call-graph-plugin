@@ -1,4 +1,4 @@
-package callgraph
+package callgraph.model
 
 import com.intellij.psi.PsiMethod
 

@@ -1,5 +1,6 @@
-package callgraph
+package callgraph.canvas
 
+import callgraph.CallGraphToolWindow
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiMethod
 

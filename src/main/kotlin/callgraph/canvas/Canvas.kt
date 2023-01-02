@@ -1,5 +1,10 @@
-package callgraph
+package callgraph.canvas
 
+import callgraph.CallGraphToolWindow
+import callgraph.Utils
+import callgraph.model.Edge
+import callgraph.model.Graph
+import callgraph.model.Node
 import com.intellij.psi.PsiModifier
 import java.awt.*
 import java.awt.geom.Arc2D

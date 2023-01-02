@@ -1,4 +1,4 @@
-package callgraph
+package callgraph.canvas
 
 import com.intellij.ui.JBColor
 import java.awt.Color

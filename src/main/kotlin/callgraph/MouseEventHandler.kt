@@ -1,5 +1,6 @@
 package callgraph
 
+import callgraph.canvas.Canvas
 import java.awt.event.*
 import java.awt.geom.Point2D
 

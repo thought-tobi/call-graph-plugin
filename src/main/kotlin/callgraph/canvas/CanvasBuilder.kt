@@ -1,5 +1,8 @@
-package callgraph
+package callgraph.canvas
 
+import callgraph.Utils
+import callgraph.model.Dependency
+import callgraph.model.Graph
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressIndicatorProvider
 import com.intellij.psi.PsiFile

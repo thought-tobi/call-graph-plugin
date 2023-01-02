@@ -1,5 +1,8 @@
 package callgraph
 
+import callgraph.canvas.CanvasConfig
+import callgraph.model.Dependency
+import callgraph.model.Graph
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.application.ApplicationManager
