@@ -35,9 +35,9 @@ import java.awt.geom.Point2D
 object Utils {
     private const val NORMALIZED_GRID_SIZE = 0.1f
 
-    fun runCallGraphFromAction(anActionEvent: AnActionEvent, buildType: CanvasConfig.BuildType) {
-        val project = anActionEvent.project
-        val psiElement = anActionEvent.getData(CommonDataKeys.PSI_ELEMENT) // get the element under editor caret
+    fun runCallGraphFromAction(actionEvent: AnActionEvent, buildType: CanvasConfig.BuildType) {
+        val project = actionEvent.project
+        val psiElement = actionEvent.getData(CommonDataKeys.PSI_ELEMENT) // get the element under editor caret
         if (project != null && psiElement is PsiMethod) {
             ToolWindowManager.getInstance(project)
                     .getToolWindow("Call Graph")
